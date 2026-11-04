@@ -89,6 +89,7 @@ large-scale, continuous production monitoring.
   under an hour. *(Target; needs observation of real users.)*
 - **Decision clarity:** reviewers can state the verdict and its main reason after
   reading only the report. *(Target; test with 3 to 5 reviewers.)*
+- **Guardrail (must hold in every release):** no result from the simulated provider is ever shown without a visible "simulated" label. *(Enforced by tests on the simulated flag and the report banner.)*
 
 ## 8. Key product decisions and tradeoffs
 
