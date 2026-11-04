@@ -10,6 +10,7 @@ from pathlib import Path
 from . import __version__
 from .export import to_dict
 from .providers import ProviderError, get_provider
+from .report import render_report
 from .runner import RunResult, run
 from .spec import SpecError, load_spec
 
@@ -62,8 +63,9 @@ def cmd_run(args: argparse.Namespace) -> int:
     out_dir = Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "results.json").write_text(json.dumps(to_dict(result), indent=2) + "\n", encoding="utf-8")
+    (out_dir / "report.html").write_text(render_report(result), encoding="utf-8")
     print(_format_summary(result))
-    print(f"\nWrote {out_dir / 'results.json'}")
+    print(f"\nWrote {out_dir / 'report.html'} and {out_dir / 'results.json'}")
     return 0
 
 

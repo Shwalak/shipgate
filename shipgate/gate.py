@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from .scoring import CaseResult, SliceStat, compute_metric, slice_accuracy
+from .scoring import CaseResult, SliceStat, compute_metric, cost_per_1k, slice_accuracy
 from .spec import Candidate, Gate, Spec
 
 SHIP, HOLD, NO_SHIP = "SHIP", "HOLD", "NO-SHIP"
@@ -106,3 +106,21 @@ def evaluate(spec: Spec, candidate: Candidate, results: list[CaseResult]) -> Eva
         reasons=explain(outcomes),
         slices=slice_accuracy(results),
     )
+
+
+def recommend(evaluations: list[Evaluation]) -> tuple[Evaluation | None, str]:
+    """Pick the cheapest candidate that passes every gate, or say that none can ship.
+
+    This is a policy, kept explicit and boring: among SHIP candidates choose the lowest
+    cost per 1,000 calls (ties broken by candidate id). It is evidence for a decision,
+    not the decision.
+    """
+    shippable = [e for e in evaluations if e.verdict == SHIP]
+    if shippable:
+        best = min(shippable, key=lambda e: (cost_per_1k(e.results, e.candidate), e.candidate.id))
+        return best, f"Recommended: {best.candidate.label}. It passes every gate and is the cheapest candidate that does."
+    on_hold = [e for e in evaluations if e.verdict == HOLD]
+    if on_hold:
+        names = ", ".join(e.candidate.label for e in on_hold)
+        return None, f"No candidate is ready to ship. On hold, pending a decision on the failed soft gates: {names}."
+    return None, "No candidate is ready to ship. Every candidate fails at least one hard gate."

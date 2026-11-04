@@ -83,6 +83,15 @@ def _predicted(result: CaseResult, field_name: str) -> str | None:
     return None if value is None else str(value).strip().lower()
 
 
+def cost_per_1k(results: list[CaseResult], candidate: Candidate) -> float:
+    """USD per 1,000 calls, from measured token counts and the candidate's prices."""
+    per_call = [
+        (r.input_tokens * candidate.price_in_per_mtok + r.output_tokens * candidate.price_out_per_mtok) / 1_000_000
+        for r in results
+    ]
+    return sum(per_call) / len(per_call) * 1000
+
+
 def compute_metric(gate: Gate, results: list[CaseResult], candidate: Candidate, spec: Spec) -> float:
     """Compute the value a gate compares against its threshold."""
     if not results:
@@ -110,11 +119,7 @@ def compute_metric(gate: Gate, results: list[CaseResult], candidate: Candidate, 
                     count += 1
         return float(count)
     if m == "cost_per_1k":
-        per_call = [
-            (r.input_tokens * candidate.price_in_per_mtok + r.output_tokens * candidate.price_out_per_mtok) / 1_000_000
-            for r in results
-        ]
-        return sum(per_call) / n * 1000
+        return cost_per_1k(results, candidate)
     if m == "p95_latency_s":
         return percentile([r.latency_s for r in results], 95)
     raise ValueError(f"unknown metric {m!r}")  # unreachable: the spec loader validates metrics
