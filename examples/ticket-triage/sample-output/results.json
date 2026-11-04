@@ -1,0 +1,3012 @@
+{
+  "feature": "Support ticket triage",
+  "generated_at": "2026-11-04T14:59:59+00:00",
+  "provider": "simulated",
+  "simulated": true,
+  "n_cases": 48,
+  "evaluations": [
+    {
+      "candidate": {
+        "id": "baseline",
+        "label": "Baseline prompt, small model",
+        "model": "claude-haiku-5-5"
+      },
+      "verdict": "NO-SHIP",
+      "reasons": [
+        "Failed hard gate \"Output is valid JSON on at least 98% of tickets\": 91.7% (needs >= 98.0%)",
+        "Failed hard gate \"No urgent ticket is ever marked low priority\": 1 (needs <= 0)",
+        "Failed hard gate \"At least 85% of urgent tickets are caught as urgent\": 7.1% (needs >= 85.0%)",
+        "Failed soft gate \"Category is right on at least 85% of tickets\": 79.2% (needs >= 85.0%)",
+        "Failed soft gate \"Category and urgency are both right on at least 85% of tickets\": 39.6% (needs >= 85.0%)"
+      ],
+      "gates": [
+        {
+          "id": "format",
+          "description": "Output is valid JSON on at least 98% of tickets",
+          "severity": "hard",
+          "metric": "valid_format_rate",
+          "threshold": ">= 0.98",
+          "value": 0.916667,
+          "passed": false
+        },
+        {
+          "id": "never_bury",
+          "description": "No urgent ticket is ever marked low priority",
+          "severity": "hard",
+          "metric": "forbidden_outcomes",
+          "threshold": "<= 0",
+          "value": 1.0,
+          "passed": false
+        },
+        {
+          "id": "urgent_recall",
+          "description": "At least 85% of urgent tickets are caught as urgent",
+          "severity": "hard",
+          "metric": "recall",
+          "threshold": ">= 0.85",
+          "value": 0.071429,
+          "passed": false
+        },
+        {
+          "id": "category_accuracy",
+          "description": "Category is right on at least 85% of tickets",
+          "severity": "soft",
+          "metric": "accuracy",
+          "threshold": ">= 0.85",
+          "value": 0.791667,
+          "passed": false
+        },
+        {
+          "id": "overall_accuracy",
+          "description": "Category and urgency are both right on at least 85% of tickets",
+          "severity": "soft",
+          "metric": "accuracy",
+          "threshold": ">= 0.85",
+          "value": 0.395833,
+          "passed": false
+        },
+        {
+          "id": "cost",
+          "description": "Costs at most $1.00 per 1,000 tickets",
+          "severity": "soft",
+          "metric": "cost_per_1k",
+          "threshold": "<= 1",
+          "value": 0.102313,
+          "passed": true
+        },
+        {
+          "id": "latency",
+          "description": "95% of tickets are triaged within 2 seconds",
+          "severity": "soft",
+          "metric": "p95_latency_s",
+          "threshold": "<= 2",
+          "value": 0.5803,
+          "passed": true
+        }
+      ],
+      "slices": [
+        {
+          "tag": "cosmetic",
+          "n": 2,
+          "accuracy": 0.5
+        },
+        {
+          "tag": "data-loss",
+          "n": 2,
+          "accuracy": 0.0
+        },
+        {
+          "tag": "feature",
+          "n": 5,
+          "accuracy": 0.2
+        },
+        {
+          "tag": "how-to",
+          "n": 7,
+          "accuracy": 0.0
+        },
+        {
+          "tag": "lockout",
+          "n": 2,
+          "accuracy": 0.0
+        },
+        {
+          "tag": "outage",
+          "n": 4,
+          "accuracy": 0.0
+        },
+        {
+          "tag": "payment",
+          "n": 2,
+          "accuracy": 0.0
+        },
+        {
+          "tag": "security",
+          "n": 5,
+          "accuracy": 0.0
+        },
+        {
+          "tag": "tricky",
+          "n": 6,
+          "accuracy": 0.3333
+        }
+      ],
+      "cases": [
+        {
+          "id": "t01",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 55,
+          "output_tokens": 10,
+          "latency_s": 0.4795
+        },
+        {
+          "id": "t02",
+          "expected": {
+            "category": "billing",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 63,
+          "output_tokens": 11,
+          "latency_s": 0.5164
+        },
+        {
+          "id": "t03",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 50,
+          "output_tokens": 11,
+          "latency_s": 0.4592
+        },
+        {
+          "id": "t04",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 53,
+          "output_tokens": 10,
+          "latency_s": 0.4397
+        },
+        {
+          "id": "t05",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 49,
+          "output_tokens": 13,
+          "latency_s": 0.5385
+        },
+        {
+          "id": "t06",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 52,
+          "output_tokens": 13,
+          "latency_s": 0.5374
+        },
+        {
+          "id": "t07",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 45,
+          "output_tokens": 10,
+          "latency_s": 0.5056
+        },
+        {
+          "id": "t08",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "This looks like a bug issue and the priority seems urgent.",
+          "valid": false,
+          "correct": false,
+          "input_tokens": 48,
+          "output_tokens": 15,
+          "latency_s": 0.5251
+        },
+        {
+          "id": "t09",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 49,
+          "output_tokens": 11,
+          "latency_s": 0.4967
+        },
+        {
+          "id": "t10",
+          "expected": {
+            "category": "billing",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 54,
+          "output_tokens": 11,
+          "latency_s": 0.5144
+        },
+        {
+          "id": "t11",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 54,
+          "output_tokens": 10,
+          "latency_s": 0.4563
+        },
+        {
+          "id": "t12",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 58,
+          "output_tokens": 13,
+          "latency_s": 0.566
+        },
+        {
+          "id": "t13",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 53,
+          "output_tokens": 13,
+          "latency_s": 0.5018
+        },
+        {
+          "id": "t14",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 50,
+          "output_tokens": 13,
+          "latency_s": 0.5058
+        },
+        {
+          "id": "t15",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 48,
+          "output_tokens": 10,
+          "latency_s": 0.4968
+        },
+        {
+          "id": "t16",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 52,
+          "output_tokens": 11,
+          "latency_s": 0.4841
+        },
+        {
+          "id": "t17",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 39,
+          "output_tokens": 13,
+          "latency_s": 0.512
+        },
+        {
+          "id": "t18",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 45,
+          "output_tokens": 10,
+          "latency_s": 0.5043
+        },
+        {
+          "id": "t19",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 45,
+          "output_tokens": 11,
+          "latency_s": 0.4802
+        },
+        {
+          "id": "t20",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 47,
+          "output_tokens": 10,
+          "latency_s": 0.4366
+        },
+        {
+          "id": "t21",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 40,
+          "output_tokens": 11,
+          "latency_s": 0.5338
+        },
+        {
+          "id": "t22",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 45,
+          "output_tokens": 10,
+          "latency_s": 0.5085
+        },
+        {
+          "id": "t23",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 45,
+          "output_tokens": 13,
+          "latency_s": 0.566
+        },
+        {
+          "id": "t24",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 47,
+          "output_tokens": 11,
+          "latency_s": 0.5237
+        },
+        {
+          "id": "t25",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 45,
+          "output_tokens": 10,
+          "latency_s": 0.4983
+        },
+        {
+          "id": "t26",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 36,
+          "output_tokens": 11,
+          "latency_s": 0.4587
+        },
+        {
+          "id": "t27",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 42,
+          "output_tokens": 10,
+          "latency_s": 0.4551
+        },
+        {
+          "id": "t28",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 43,
+          "output_tokens": 13,
+          "latency_s": 0.5203
+        },
+        {
+          "id": "t29",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 38,
+          "output_tokens": 10,
+          "latency_s": 0.4821
+        },
+        {
+          "id": "t30",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 44,
+          "output_tokens": 11,
+          "latency_s": 0.5072
+        },
+        {
+          "id": "t31",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 50,
+          "output_tokens": 13,
+          "latency_s": 0.4957
+        },
+        {
+          "id": "t32",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "This looks like a bug issue and the priority seems normal.",
+          "valid": false,
+          "correct": false,
+          "input_tokens": 49,
+          "output_tokens": 15,
+          "latency_s": 0.4964
+        },
+        {
+          "id": "t33",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 49,
+          "output_tokens": 11,
+          "latency_s": 0.4785
+        },
+        {
+          "id": "t34",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "This looks like a bug issue and the priority seems normal.",
+          "valid": false,
+          "correct": false,
+          "input_tokens": 39,
+          "output_tokens": 15,
+          "latency_s": 0.5803
+        },
+        {
+          "id": "t35",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 27,
+          "output_tokens": 11,
+          "latency_s": 0.4433
+        },
+        {
+          "id": "t36",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 37,
+          "output_tokens": 11,
+          "latency_s": 0.44
+        },
+        {
+          "id": "t37",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 41,
+          "output_tokens": 13,
+          "latency_s": 0.5546
+        },
+        {
+          "id": "t38",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 42,
+          "output_tokens": 11,
+          "latency_s": 0.4616
+        },
+        {
+          "id": "t39",
+          "expected": {
+            "category": "bug",
+            "urgency": "low"
+          },
+          "output": "This looks like a bug issue and the priority seems urgent.",
+          "valid": false,
+          "correct": false,
+          "input_tokens": 40,
+          "output_tokens": 15,
+          "latency_s": 0.572
+        },
+        {
+          "id": "t40",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 27,
+          "output_tokens": 11,
+          "latency_s": 0.5259
+        },
+        {
+          "id": "t41",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 42,
+          "output_tokens": 11,
+          "latency_s": 0.4398
+        },
+        {
+          "id": "t42",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 39,
+          "output_tokens": 13,
+          "latency_s": 1.381
+        },
+        {
+          "id": "t43",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 40,
+          "output_tokens": 11,
+          "latency_s": 0.5041
+        },
+        {
+          "id": "t44",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 44,
+          "output_tokens": 11,
+          "latency_s": 0.4717
+        },
+        {
+          "id": "t45",
+          "expected": {
+            "category": "bug",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 30,
+          "output_tokens": 10,
+          "latency_s": 0.4848
+        },
+        {
+          "id": "t46",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 31,
+          "output_tokens": 11,
+          "latency_s": 0.5338
+        },
+        {
+          "id": "t47",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 40,
+          "output_tokens": 13,
+          "latency_s": 0.5344
+        },
+        {
+          "id": "t48",
+          "expected": {
+            "category": "billing",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 30,
+          "output_tokens": 11,
+          "latency_s": 1.1266
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "id": "rubric_v1",
+        "label": "Rubric prompt v1, small model",
+        "model": "claude-haiku-5-5"
+      },
+      "verdict": "NO-SHIP",
+      "reasons": [
+        "Failed hard gate \"No urgent ticket is ever marked low priority\": 1 (needs <= 0)",
+        "Failed hard gate \"At least 85% of urgent tickets are caught as urgent\": 71.4% (needs >= 85.0%)",
+        "Failed soft gate \"Category and urgency are both right on at least 85% of tickets\": 83.3% (needs >= 85.0%)"
+      ],
+      "gates": [
+        {
+          "id": "format",
+          "description": "Output is valid JSON on at least 98% of tickets",
+          "severity": "hard",
+          "metric": "valid_format_rate",
+          "threshold": ">= 0.98",
+          "value": 1.0,
+          "passed": true
+        },
+        {
+          "id": "never_bury",
+          "description": "No urgent ticket is ever marked low priority",
+          "severity": "hard",
+          "metric": "forbidden_outcomes",
+          "threshold": "<= 0",
+          "value": 1.0,
+          "passed": false
+        },
+        {
+          "id": "urgent_recall",
+          "description": "At least 85% of urgent tickets are caught as urgent",
+          "severity": "hard",
+          "metric": "recall",
+          "threshold": ">= 0.85",
+          "value": 0.714286,
+          "passed": false
+        },
+        {
+          "id": "category_accuracy",
+          "description": "Category is right on at least 85% of tickets",
+          "severity": "soft",
+          "metric": "accuracy",
+          "threshold": ">= 0.85",
+          "value": 0.895833,
+          "passed": true
+        },
+        {
+          "id": "overall_accuracy",
+          "description": "Category and urgency are both right on at least 85% of tickets",
+          "severity": "soft",
+          "metric": "accuracy",
+          "threshold": ">= 0.85",
+          "value": 0.833333,
+          "passed": false
+        },
+        {
+          "id": "cost",
+          "description": "Costs at most $1.00 per 1,000 tickets",
+          "severity": "soft",
+          "metric": "cost_per_1k",
+          "threshold": "<= 1",
+          "value": 0.3215,
+          "passed": true
+        },
+        {
+          "id": "latency",
+          "description": "95% of tickets are triaged within 2 seconds",
+          "severity": "soft",
+          "metric": "p95_latency_s",
+          "threshold": "<= 2",
+          "value": 0.7268,
+          "passed": true
+        }
+      ],
+      "slices": [
+        {
+          "tag": "cosmetic",
+          "n": 2,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "data-loss",
+          "n": 2,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "feature",
+          "n": 5,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "how-to",
+          "n": 7,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "lockout",
+          "n": 2,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "outage",
+          "n": 4,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "payment",
+          "n": 2,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "security",
+          "n": 5,
+          "accuracy": 0.0
+        },
+        {
+          "tag": "tricky",
+          "n": 6,
+          "accuracy": 0.8333
+        }
+      ],
+      "cases": [
+        {
+          "id": "t01",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 277,
+          "output_tokens": 10,
+          "latency_s": 0.609
+        },
+        {
+          "id": "t02",
+          "expected": {
+            "category": "billing",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 285,
+          "output_tokens": 11,
+          "latency_s": 0.6622
+        },
+        {
+          "id": "t03",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 272,
+          "output_tokens": 11,
+          "latency_s": 0.6331
+        },
+        {
+          "id": "t04",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 275,
+          "output_tokens": 10,
+          "latency_s": 0.65
+        },
+        {
+          "id": "t05",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 271,
+          "output_tokens": 10,
+          "latency_s": 0.6113
+        },
+        {
+          "id": "t06",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 274,
+          "output_tokens": 13,
+          "latency_s": 0.6545
+        },
+        {
+          "id": "t07",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 267,
+          "output_tokens": 10,
+          "latency_s": 0.6274
+        },
+        {
+          "id": "t08",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 270,
+          "output_tokens": 10,
+          "latency_s": 0.7019
+        },
+        {
+          "id": "t09",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 271,
+          "output_tokens": 11,
+          "latency_s": 0.607
+        },
+        {
+          "id": "t10",
+          "expected": {
+            "category": "billing",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 276,
+          "output_tokens": 11,
+          "latency_s": 0.6594
+        },
+        {
+          "id": "t11",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 276,
+          "output_tokens": 10,
+          "latency_s": 0.6627
+        },
+        {
+          "id": "t12",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 280,
+          "output_tokens": 13,
+          "latency_s": 0.6789
+        },
+        {
+          "id": "t13",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 275,
+          "output_tokens": 13,
+          "latency_s": 0.6189
+        },
+        {
+          "id": "t14",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 272,
+          "output_tokens": 10,
+          "latency_s": 0.6712
+        },
+        {
+          "id": "t15",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 270,
+          "output_tokens": 10,
+          "latency_s": 0.5914
+        },
+        {
+          "id": "t16",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 274,
+          "output_tokens": 11,
+          "latency_s": 0.7169
+        },
+        {
+          "id": "t17",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 261,
+          "output_tokens": 13,
+          "latency_s": 0.6216
+        },
+        {
+          "id": "t18",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 267,
+          "output_tokens": 10,
+          "latency_s": 0.6703
+        },
+        {
+          "id": "t19",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 267,
+          "output_tokens": 10,
+          "latency_s": 0.6398
+        },
+        {
+          "id": "t20",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 269,
+          "output_tokens": 10,
+          "latency_s": 0.5973
+        },
+        {
+          "id": "t21",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 262,
+          "output_tokens": 13,
+          "latency_s": 0.6573
+        },
+        {
+          "id": "t22",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 267,
+          "output_tokens": 10,
+          "latency_s": 0.6557
+        },
+        {
+          "id": "t23",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 267,
+          "output_tokens": 13,
+          "latency_s": 0.6517
+        },
+        {
+          "id": "t24",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 269,
+          "output_tokens": 11,
+          "latency_s": 0.7003
+        },
+        {
+          "id": "t25",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 267,
+          "output_tokens": 10,
+          "latency_s": 0.6194
+        },
+        {
+          "id": "t26",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 258,
+          "output_tokens": 11,
+          "latency_s": 0.6733
+        },
+        {
+          "id": "t27",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 264,
+          "output_tokens": 10,
+          "latency_s": 0.6663
+        },
+        {
+          "id": "t28",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 265,
+          "output_tokens": 13,
+          "latency_s": 0.7268
+        },
+        {
+          "id": "t29",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 260,
+          "output_tokens": 10,
+          "latency_s": 0.7008
+        },
+        {
+          "id": "t30",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 266,
+          "output_tokens": 11,
+          "latency_s": 0.5939
+        },
+        {
+          "id": "t31",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 272,
+          "output_tokens": 13,
+          "latency_s": 0.669
+        },
+        {
+          "id": "t32",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 271,
+          "output_tokens": 10,
+          "latency_s": 0.6356
+        },
+        {
+          "id": "t33",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 271,
+          "output_tokens": 11,
+          "latency_s": 0.6109
+        },
+        {
+          "id": "t34",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 261,
+          "output_tokens": 10,
+          "latency_s": 0.6903
+        },
+        {
+          "id": "t35",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 249,
+          "output_tokens": 10,
+          "latency_s": 0.6391
+        },
+        {
+          "id": "t36",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 259,
+          "output_tokens": 10,
+          "latency_s": 0.6562
+        },
+        {
+          "id": "t37",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 263,
+          "output_tokens": 13,
+          "latency_s": 0.6748
+        },
+        {
+          "id": "t38",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 264,
+          "output_tokens": 13,
+          "latency_s": 0.6836
+        },
+        {
+          "id": "t39",
+          "expected": {
+            "category": "bug",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 262,
+          "output_tokens": 10,
+          "latency_s": 0.6667
+        },
+        {
+          "id": "t40",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 249,
+          "output_tokens": 10,
+          "latency_s": 0.6102
+        },
+        {
+          "id": "t41",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 264,
+          "output_tokens": 10,
+          "latency_s": 0.6099
+        },
+        {
+          "id": "t42",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 261,
+          "output_tokens": 13,
+          "latency_s": 0.7272
+        },
+        {
+          "id": "t43",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 262,
+          "output_tokens": 10,
+          "latency_s": 0.6236
+        },
+        {
+          "id": "t44",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 266,
+          "output_tokens": 13,
+          "latency_s": 0.7463
+        },
+        {
+          "id": "t45",
+          "expected": {
+            "category": "bug",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 252,
+          "output_tokens": 10,
+          "latency_s": 0.6949
+        },
+        {
+          "id": "t46",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 253,
+          "output_tokens": 10,
+          "latency_s": 0.6476
+        },
+        {
+          "id": "t47",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 262,
+          "output_tokens": 13,
+          "latency_s": 0.7124
+        },
+        {
+          "id": "t48",
+          "expected": {
+            "category": "billing",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 252,
+          "output_tokens": 11,
+          "latency_s": 0.6834
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "id": "rubric_v2",
+        "label": "Rubric prompt v2 (adds safety rule), small model",
+        "model": "claude-haiku-5-5"
+      },
+      "verdict": "SHIP",
+      "reasons": [
+        "All gates passed."
+      ],
+      "gates": [
+        {
+          "id": "format",
+          "description": "Output is valid JSON on at least 98% of tickets",
+          "severity": "hard",
+          "metric": "valid_format_rate",
+          "threshold": ">= 0.98",
+          "value": 1.0,
+          "passed": true
+        },
+        {
+          "id": "never_bury",
+          "description": "No urgent ticket is ever marked low priority",
+          "severity": "hard",
+          "metric": "forbidden_outcomes",
+          "threshold": "<= 0",
+          "value": 0.0,
+          "passed": true
+        },
+        {
+          "id": "urgent_recall",
+          "description": "At least 85% of urgent tickets are caught as urgent",
+          "severity": "hard",
+          "metric": "recall",
+          "threshold": ">= 0.85",
+          "value": 1.0,
+          "passed": true
+        },
+        {
+          "id": "category_accuracy",
+          "description": "Category is right on at least 85% of tickets",
+          "severity": "soft",
+          "metric": "accuracy",
+          "threshold": ">= 0.85",
+          "value": 0.895833,
+          "passed": true
+        },
+        {
+          "id": "overall_accuracy",
+          "description": "Category and urgency are both right on at least 85% of tickets",
+          "severity": "soft",
+          "metric": "accuracy",
+          "threshold": ">= 0.85",
+          "value": 0.875,
+          "passed": true
+        },
+        {
+          "id": "cost",
+          "description": "Costs at most $1.00 per 1,000 tickets",
+          "severity": "soft",
+          "metric": "cost_per_1k",
+          "threshold": "<= 1",
+          "value": 0.4015,
+          "passed": true
+        },
+        {
+          "id": "latency",
+          "description": "95% of tickets are triaged within 2 seconds",
+          "severity": "soft",
+          "metric": "p95_latency_s",
+          "threshold": "<= 2",
+          "value": 0.7487,
+          "passed": true
+        }
+      ],
+      "slices": [
+        {
+          "tag": "cosmetic",
+          "n": 2,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "data-loss",
+          "n": 2,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "feature",
+          "n": 5,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "how-to",
+          "n": 7,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "lockout",
+          "n": 2,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "outage",
+          "n": 4,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "payment",
+          "n": 2,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "security",
+          "n": 5,
+          "accuracy": 0.4
+        },
+        {
+          "tag": "tricky",
+          "n": 6,
+          "accuracy": 1.0
+        }
+      ],
+      "cases": [
+        {
+          "id": "t01",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 357,
+          "output_tokens": 10,
+          "latency_s": 0.5856
+        },
+        {
+          "id": "t02",
+          "expected": {
+            "category": "billing",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 365,
+          "output_tokens": 11,
+          "latency_s": 0.64
+        },
+        {
+          "id": "t03",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 352,
+          "output_tokens": 11,
+          "latency_s": 0.7034
+        },
+        {
+          "id": "t04",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 355,
+          "output_tokens": 10,
+          "latency_s": 0.6753
+        },
+        {
+          "id": "t05",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 351,
+          "output_tokens": 10,
+          "latency_s": 0.7041
+        },
+        {
+          "id": "t06",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 354,
+          "output_tokens": 13,
+          "latency_s": 0.6484
+        },
+        {
+          "id": "t07",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 347,
+          "output_tokens": 10,
+          "latency_s": 0.5758
+        },
+        {
+          "id": "t08",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 350,
+          "output_tokens": 10,
+          "latency_s": 0.6861
+        },
+        {
+          "id": "t09",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 351,
+          "output_tokens": 11,
+          "latency_s": 0.6664
+        },
+        {
+          "id": "t10",
+          "expected": {
+            "category": "billing",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 356,
+          "output_tokens": 11,
+          "latency_s": 0.5994
+        },
+        {
+          "id": "t11",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 356,
+          "output_tokens": 10,
+          "latency_s": 0.6477
+        },
+        {
+          "id": "t12",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 360,
+          "output_tokens": 13,
+          "latency_s": 0.6145
+        },
+        {
+          "id": "t13",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 355,
+          "output_tokens": 13,
+          "latency_s": 0.7344
+        },
+        {
+          "id": "t14",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 352,
+          "output_tokens": 10,
+          "latency_s": 0.6985
+        },
+        {
+          "id": "t15",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 350,
+          "output_tokens": 10,
+          "latency_s": 0.6455
+        },
+        {
+          "id": "t16",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 354,
+          "output_tokens": 11,
+          "latency_s": 0.7129
+        },
+        {
+          "id": "t17",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 341,
+          "output_tokens": 13,
+          "latency_s": 0.628
+        },
+        {
+          "id": "t18",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 347,
+          "output_tokens": 10,
+          "latency_s": 0.5968
+        },
+        {
+          "id": "t19",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 347,
+          "output_tokens": 10,
+          "latency_s": 0.7005
+        },
+        {
+          "id": "t20",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 349,
+          "output_tokens": 10,
+          "latency_s": 0.6855
+        },
+        {
+          "id": "t21",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 342,
+          "output_tokens": 13,
+          "latency_s": 0.7075
+        },
+        {
+          "id": "t22",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 347,
+          "output_tokens": 10,
+          "latency_s": 0.6435
+        },
+        {
+          "id": "t23",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 347,
+          "output_tokens": 13,
+          "latency_s": 0.756
+        },
+        {
+          "id": "t24",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 349,
+          "output_tokens": 11,
+          "latency_s": 0.6983
+        },
+        {
+          "id": "t25",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 347,
+          "output_tokens": 10,
+          "latency_s": 0.628
+        },
+        {
+          "id": "t26",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 338,
+          "output_tokens": 11,
+          "latency_s": 0.6475
+        },
+        {
+          "id": "t27",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 344,
+          "output_tokens": 10,
+          "latency_s": 0.5801
+        },
+        {
+          "id": "t28",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 345,
+          "output_tokens": 13,
+          "latency_s": 0.7417
+        },
+        {
+          "id": "t29",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 340,
+          "output_tokens": 10,
+          "latency_s": 0.574
+        },
+        {
+          "id": "t30",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 346,
+          "output_tokens": 11,
+          "latency_s": 0.6642
+        },
+        {
+          "id": "t31",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 352,
+          "output_tokens": 13,
+          "latency_s": 0.6854
+        },
+        {
+          "id": "t32",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 351,
+          "output_tokens": 10,
+          "latency_s": 0.6186
+        },
+        {
+          "id": "t33",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 351,
+          "output_tokens": 11,
+          "latency_s": 0.6991
+        },
+        {
+          "id": "t34",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 341,
+          "output_tokens": 10,
+          "latency_s": 0.6456
+        },
+        {
+          "id": "t35",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 329,
+          "output_tokens": 10,
+          "latency_s": 0.6554
+        },
+        {
+          "id": "t36",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 339,
+          "output_tokens": 10,
+          "latency_s": 0.7052
+        },
+        {
+          "id": "t37",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 343,
+          "output_tokens": 13,
+          "latency_s": 0.6471
+        },
+        {
+          "id": "t38",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 344,
+          "output_tokens": 13,
+          "latency_s": 0.7487
+        },
+        {
+          "id": "t39",
+          "expected": {
+            "category": "bug",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 342,
+          "output_tokens": 10,
+          "latency_s": 0.6856
+        },
+        {
+          "id": "t40",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 329,
+          "output_tokens": 10,
+          "latency_s": 0.6555
+        },
+        {
+          "id": "t41",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 344,
+          "output_tokens": 10,
+          "latency_s": 0.7123
+        },
+        {
+          "id": "t42",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 341,
+          "output_tokens": 13,
+          "latency_s": 0.6139
+        },
+        {
+          "id": "t43",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 342,
+          "output_tokens": 10,
+          "latency_s": 0.6243
+        },
+        {
+          "id": "t44",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 346,
+          "output_tokens": 13,
+          "latency_s": 0.6483
+        },
+        {
+          "id": "t45",
+          "expected": {
+            "category": "bug",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 332,
+          "output_tokens": 10,
+          "latency_s": 0.654
+        },
+        {
+          "id": "t46",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 333,
+          "output_tokens": 10,
+          "latency_s": 0.6135
+        },
+        {
+          "id": "t47",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 342,
+          "output_tokens": 13,
+          "latency_s": 0.6427
+        },
+        {
+          "id": "t48",
+          "expected": {
+            "category": "billing",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 332,
+          "output_tokens": 11,
+          "latency_s": 1.7461
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "id": "strong",
+        "label": "Rubric prompt v2, large model",
+        "model": "claude-sonnet-5-5"
+      },
+      "verdict": "HOLD",
+      "reasons": [
+        "Failed soft gate \"Costs at most $1.00 per 1,000 tickets\": $2.01 (needs <= $1.00)",
+        "Failed soft gate \"95% of tickets are triaged within 2 seconds\": 4.91s (needs <= 2.00s)"
+      ],
+      "gates": [
+        {
+          "id": "format",
+          "description": "Output is valid JSON on at least 98% of tickets",
+          "severity": "hard",
+          "metric": "valid_format_rate",
+          "threshold": ">= 0.98",
+          "value": 1.0,
+          "passed": true
+        },
+        {
+          "id": "never_bury",
+          "description": "No urgent ticket is ever marked low priority",
+          "severity": "hard",
+          "metric": "forbidden_outcomes",
+          "threshold": "<= 0",
+          "value": 0.0,
+          "passed": true
+        },
+        {
+          "id": "urgent_recall",
+          "description": "At least 85% of urgent tickets are caught as urgent",
+          "severity": "hard",
+          "metric": "recall",
+          "threshold": ">= 0.85",
+          "value": 1.0,
+          "passed": true
+        },
+        {
+          "id": "category_accuracy",
+          "description": "Category is right on at least 85% of tickets",
+          "severity": "soft",
+          "metric": "accuracy",
+          "threshold": ">= 0.85",
+          "value": 0.979167,
+          "passed": true
+        },
+        {
+          "id": "overall_accuracy",
+          "description": "Category and urgency are both right on at least 85% of tickets",
+          "severity": "soft",
+          "metric": "accuracy",
+          "threshold": ">= 0.85",
+          "value": 0.979167,
+          "passed": true
+        },
+        {
+          "id": "cost",
+          "description": "Costs at most $1.00 per 1,000 tickets",
+          "severity": "soft",
+          "metric": "cost_per_1k",
+          "threshold": "<= 1",
+          "value": 2.009583,
+          "passed": false
+        },
+        {
+          "id": "latency",
+          "description": "95% of tickets are triaged within 2 seconds",
+          "severity": "soft",
+          "metric": "p95_latency_s",
+          "threshold": "<= 2",
+          "value": 4.9128,
+          "passed": false
+        }
+      ],
+      "slices": [
+        {
+          "tag": "cosmetic",
+          "n": 2,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "data-loss",
+          "n": 2,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "feature",
+          "n": 5,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "how-to",
+          "n": 7,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "lockout",
+          "n": 2,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "outage",
+          "n": 4,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "payment",
+          "n": 2,
+          "accuracy": 1.0
+        },
+        {
+          "tag": "security",
+          "n": 5,
+          "accuracy": 0.8
+        },
+        {
+          "tag": "tricky",
+          "n": 6,
+          "accuracy": 1.0
+        }
+      ],
+      "cases": [
+        {
+          "id": "t01",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 357,
+          "output_tokens": 10,
+          "latency_s": 1.8358
+        },
+        {
+          "id": "t02",
+          "expected": {
+            "category": "billing",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 365,
+          "output_tokens": 11,
+          "latency_s": 1.7044
+        },
+        {
+          "id": "t03",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 352,
+          "output_tokens": 13,
+          "latency_s": 4.9128
+        },
+        {
+          "id": "t04",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 355,
+          "output_tokens": 10,
+          "latency_s": 1.844
+        },
+        {
+          "id": "t05",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 351,
+          "output_tokens": 13,
+          "latency_s": 4.9111
+        },
+        {
+          "id": "t06",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 354,
+          "output_tokens": 13,
+          "latency_s": 5.0523
+        },
+        {
+          "id": "t07",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 347,
+          "output_tokens": 10,
+          "latency_s": 1.8497
+        },
+        {
+          "id": "t08",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 350,
+          "output_tokens": 10,
+          "latency_s": 4.5959
+        },
+        {
+          "id": "t09",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": false,
+          "input_tokens": 351,
+          "output_tokens": 11,
+          "latency_s": 1.7728
+        },
+        {
+          "id": "t10",
+          "expected": {
+            "category": "billing",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 356,
+          "output_tokens": 11,
+          "latency_s": 1.9648
+        },
+        {
+          "id": "t11",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 356,
+          "output_tokens": 10,
+          "latency_s": 1.8411
+        },
+        {
+          "id": "t12",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 360,
+          "output_tokens": 13,
+          "latency_s": 4.7752
+        },
+        {
+          "id": "t13",
+          "expected": {
+            "category": "account_access",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 355,
+          "output_tokens": 13,
+          "latency_s": 5.1138
+        },
+        {
+          "id": "t14",
+          "expected": {
+            "category": "bug",
+            "urgency": "urgent"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"urgent\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 352,
+          "output_tokens": 10,
+          "latency_s": 1.8571
+        },
+        {
+          "id": "t15",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 350,
+          "output_tokens": 10,
+          "latency_s": 1.7332
+        },
+        {
+          "id": "t16",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 354,
+          "output_tokens": 11,
+          "latency_s": 1.8177
+        },
+        {
+          "id": "t17",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 341,
+          "output_tokens": 13,
+          "latency_s": 1.6846
+        },
+        {
+          "id": "t18",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 347,
+          "output_tokens": 10,
+          "latency_s": 1.8472
+        },
+        {
+          "id": "t19",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 347,
+          "output_tokens": 11,
+          "latency_s": 1.6872
+        },
+        {
+          "id": "t20",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 349,
+          "output_tokens": 10,
+          "latency_s": 4.3141
+        },
+        {
+          "id": "t21",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 342,
+          "output_tokens": 11,
+          "latency_s": 1.9674
+        },
+        {
+          "id": "t22",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 347,
+          "output_tokens": 10,
+          "latency_s": 1.7798
+        },
+        {
+          "id": "t23",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 347,
+          "output_tokens": 13,
+          "latency_s": 1.9984
+        },
+        {
+          "id": "t24",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 349,
+          "output_tokens": 11,
+          "latency_s": 1.6308
+        },
+        {
+          "id": "t25",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 347,
+          "output_tokens": 10,
+          "latency_s": 1.6117
+        },
+        {
+          "id": "t26",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 338,
+          "output_tokens": 11,
+          "latency_s": 1.9726
+        },
+        {
+          "id": "t27",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 344,
+          "output_tokens": 10,
+          "latency_s": 1.5818
+        },
+        {
+          "id": "t28",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 345,
+          "output_tokens": 13,
+          "latency_s": 1.9351
+        },
+        {
+          "id": "t29",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 340,
+          "output_tokens": 10,
+          "latency_s": 1.8738
+        },
+        {
+          "id": "t30",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 346,
+          "output_tokens": 11,
+          "latency_s": 1.7002
+        },
+        {
+          "id": "t31",
+          "expected": {
+            "category": "account_access",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"account_access\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 352,
+          "output_tokens": 13,
+          "latency_s": 2.0282
+        },
+        {
+          "id": "t32",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 351,
+          "output_tokens": 10,
+          "latency_s": 1.714
+        },
+        {
+          "id": "t33",
+          "expected": {
+            "category": "billing",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 351,
+          "output_tokens": 11,
+          "latency_s": 4.453
+        },
+        {
+          "id": "t34",
+          "expected": {
+            "category": "bug",
+            "urgency": "normal"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"normal\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 341,
+          "output_tokens": 10,
+          "latency_s": 1.9068
+        },
+        {
+          "id": "t35",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 329,
+          "output_tokens": 10,
+          "latency_s": 1.7606
+        },
+        {
+          "id": "t36",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 339,
+          "output_tokens": 10,
+          "latency_s": 1.5595
+        },
+        {
+          "id": "t37",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 343,
+          "output_tokens": 13,
+          "latency_s": 1.7391
+        },
+        {
+          "id": "t38",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 344,
+          "output_tokens": 13,
+          "latency_s": 1.9145
+        },
+        {
+          "id": "t39",
+          "expected": {
+            "category": "bug",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 342,
+          "output_tokens": 10,
+          "latency_s": 1.6504
+        },
+        {
+          "id": "t40",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 329,
+          "output_tokens": 10,
+          "latency_s": 1.7327
+        },
+        {
+          "id": "t41",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 344,
+          "output_tokens": 10,
+          "latency_s": 1.7145
+        },
+        {
+          "id": "t42",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 341,
+          "output_tokens": 13,
+          "latency_s": 1.7827
+        },
+        {
+          "id": "t43",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 342,
+          "output_tokens": 10,
+          "latency_s": 1.6212
+        },
+        {
+          "id": "t44",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 346,
+          "output_tokens": 13,
+          "latency_s": 1.7509
+        },
+        {
+          "id": "t45",
+          "expected": {
+            "category": "bug",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"bug\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 332,
+          "output_tokens": 10,
+          "latency_s": 1.8929
+        },
+        {
+          "id": "t46",
+          "expected": {
+            "category": "how_to",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"how_to\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 333,
+          "output_tokens": 10,
+          "latency_s": 1.7685
+        },
+        {
+          "id": "t47",
+          "expected": {
+            "category": "feature_request",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"feature_request\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 342,
+          "output_tokens": 13,
+          "latency_s": 1.705
+        },
+        {
+          "id": "t48",
+          "expected": {
+            "category": "billing",
+            "urgency": "low"
+          },
+          "output": "{\"category\": \"billing\", \"urgency\": \"low\"}",
+          "valid": true,
+          "correct": true,
+          "input_tokens": 332,
+          "output_tokens": 11,
+          "latency_s": 1.6639
+        }
+      ]
+    }
+  ]
+}
