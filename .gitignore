@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+
+# Tooling
+.pytest_cache/
+.coverage
+.DS_Store
+
+# Secrets and local config
+.env
+.env.*
+*.key
+
+# Generated output (the committed sample report lives in examples/)
+out/
