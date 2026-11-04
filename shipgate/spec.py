@@ -45,6 +45,7 @@ class Candidate:
     price_in_per_mtok: float
     price_out_per_mtok: float
     mock_profile: str | None = None
+    temperature: float | None = None  # omitted from live requests when None
 
 
 @dataclass
@@ -126,6 +127,7 @@ def _parse_candidates(raw: Any, base: Path) -> list[Candidate]:
                 price_in_per_mtok=float(_require(price, "input", f"{where}.price_per_mtok")),
                 price_out_per_mtok=float(_require(price, "output", f"{where}.price_per_mtok")),
                 mock_profile=item.get("mock_profile"),
+                temperature=None if item.get("temperature") is None else float(item["temperature"]),
             )
         )
     return out
