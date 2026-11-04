@@ -78,7 +78,7 @@ large-scale, continuous production monitoring.
 | R6 | Generate a self-contained HTML report and a JSON results file. | Must |
 | R7 | Run with no API key using a clearly labelled simulated provider. | Must |
 | R8 | Optional live provider (Anthropic Messages API). | Should |
-| R9 | Optional LLM-as-judge scorer for open-ended outputs. | Should |
+| R9 | Optional LLM-as-judge scorer for open-ended outputs. | Should (not built in v0.1; see section 10) |
 | R10 | Per-tag slice breakdown so a weak segment cannot hide inside a good average. | Should |
 
 ## 7. Success metrics (targets to validate, not results)
@@ -114,6 +114,7 @@ large-scale, continuous production monitoring.
 
 ## 10. What I would do next (with a team of three engineers for a sprint)
 
+0. LLM-as-judge scorer for open-ended outputs (R9), once there is a way to validate the judge itself.
 1. Guided spec builder (form to YAML) and a spec linter that warns on tiny samples.
 2. More providers behind the existing provider interface.
 3. Run history: compare today's run with last week's to catch regressions.
