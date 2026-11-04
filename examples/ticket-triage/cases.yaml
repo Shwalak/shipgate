@@ -1,0 +1,192 @@
+# Synthetic support tickets for a fictional project-management product ("Taskwise").
+# All text is invented for this example; no real customer data is used.
+#
+# Labelling rubric (the "ground truth" a PM would agree with support leads):
+#   category: billing | bug | how_to | account_access | feature_request
+#   urgency:
+#     urgent  - outage for a team, data loss or exposure, security risk, wrongly taken
+#               money with a hard deadline, or a lockout with a hard deadline
+#     normal  - a real problem or request with no emergency
+#     low     - questions, feature ideas and cosmetic issues
+#
+# Tags are for slicing results (see the per-segment table in the report).
+
+# ---------------------------------------------------------------- urgent (14)
+- id: t01
+  input: "Since about 9am nobody on our team of 40 can open any project. The page just spins and then shows a blank screen. We have a client delivery at noon."
+  expected: {category: bug, urgency: urgent}
+  tags: [outage]
+- id: t02
+  input: "I just noticed a charge of $2,340 on our card today and another identical one yesterday. We are on the $195 plan. Please reverse this today, our finance team is closing the books."
+  expected: {category: billing, urgency: urgent}
+  tags: [payment]
+- id: t03
+  input: "Someone logged into our admin account from a country we don't operate in and changed the billing email. Please lock the account."
+  expected: {category: account_access, urgency: urgent}
+  tags: [security]
+- id: t04
+  input: "We imported our customer list and now half of the records are gone. The backup you advertise doesn't show anything from last week either."
+  expected: {category: bug, urgency: urgent}
+  tags: [data-loss]
+- id: t05
+  input: "My API key was accidentally committed to a public repo about an hour ago. I've removed it but I need it revoked immediately."
+  expected: {category: account_access, urgency: urgent}
+  tags: [security]
+- id: t06
+  input: "I'm locked out and my board presentation starts in 30 minutes. The reset email never arrives and my phone with the 2FA app was stolen."
+  expected: {category: account_access, urgency: urgent}
+  tags: [lockout]
+- id: t07
+  input: "Our payroll export has been duplicating every employee row since yesterday's update. Payroll runs tonight."
+  expected: {category: bug, urgency: urgent}
+  tags: [data-loss]
+- id: t08
+  input: "URGENT: the checkout page on our embedded widget returns a 500 error for every customer. We're losing sales right now."
+  expected: {category: bug, urgency: urgent}
+  tags: [outage]
+- id: t09
+  input: "Your system emailed our entire client list a draft invoice meant for internal review. Several clients have already replied."
+  expected: {category: bug, urgency: urgent}
+  tags: [security]
+- id: t10
+  input: "We were charged after cancelling in March. I have the cancellation confirmation. My bank is about to dispute this tomorrow unless it's refunded."
+  expected: {category: billing, urgency: urgent}
+  tags: [payment]
+- id: t11
+  input: "The mobile app crashes on launch for every user in our company since the update this morning. Our field team can't log hours and it's month-end."
+  expected: {category: bug, urgency: urgent}
+  tags: [outage]
+- id: t12
+  input: "I think a former employee still has access. We saw them viewing confidential project files last night. Please remove their seat and tell us what they accessed."
+  expected: {category: account_access, urgency: urgent}
+  tags: [security]
+- id: t13
+  input: "Our SSO login is failing for the whole organisation with 'invalid assertion'. Nobody can sign in and we have an all-hands demo in an hour."
+  expected: {category: account_access, urgency: urgent}
+  tags: [outage, lockout]
+- id: t14
+  input: "The export to PDF has started including other customers' project names in the footer. I can see names I definitely shouldn't."
+  expected: {category: bug, urgency: urgent}
+  tags: [security, tricky]
+
+# ---------------------------------------------------------------- normal (20)
+- id: t15
+  input: "The Gantt view shows tasks one day earlier than the dates I set in the list view. Happens for me in Chrome and Safari."
+  expected: {category: bug, urgency: normal}
+- id: t16
+  input: "Could you confirm whether our annual plan includes the extra storage add-on? The invoice shows it but our contract doesn't mention it."
+  expected: {category: billing, urgency: normal}
+- id: t17
+  input: "I forgot my password and the reset link says it has expired every time I click it."
+  expected: {category: account_access, urgency: normal}
+- id: t18
+  input: "Comments I post on tasks sometimes show up twice. It doesn't break anything but it's confusing for the team."
+  expected: {category: bug, urgency: normal}
+- id: t19
+  input: "We need to move our billing to a new credit card before the next renewal on the 28th. Where do I update it?"
+  expected: {category: billing, urgency: normal}
+- id: t20
+  input: "Our invite emails to new teammates go to spam for some recipients. We've asked them to check but a few never get it."
+  expected: {category: bug, urgency: normal}
+- id: t21
+  input: "Can you add two more seats to our plan starting next month and send an updated invoice?"
+  expected: {category: billing, urgency: normal}
+- id: t22
+  input: "The search bar returns no results for tasks I created last week, but they show up when I scroll manually."
+  expected: {category: bug, urgency: normal}
+- id: t23
+  input: "I was added to the wrong workspace when I accepted the invite. Can someone move my account to Finance Ops?"
+  expected: {category: account_access, urgency: normal}
+- id: t24
+  input: "Our VAT number (already on file) doesn't appear on the latest invoice. Please reissue it with the number included."
+  expected: {category: billing, urgency: normal}
+- id: t25
+  input: "The Slack integration stopped posting notifications to our channel two days ago. Reconnecting didn't help."
+  expected: {category: bug, urgency: normal}
+- id: t26
+  input: "Why was I charged tax on my last invoice? We're a registered nonprofit."
+  expected: {category: billing, urgency: normal}
+- id: t27
+  input: "Time entries I log for 2:10 show up as 2:15 in the timesheet report. Looks like a rounding bug."
+  expected: {category: bug, urgency: normal}
+- id: t28
+  input: "My login works on desktop but the mobile app keeps saying 'session expired' every time I open it."
+  expected: {category: account_access, urgency: normal}
+- id: t29
+  input: "The CSV export drops the last column whenever a task has a comma in its title."
+  expected: {category: bug, urgency: normal}
+- id: t30
+  input: "We'd like to be invoiced quarterly instead of annually. Is that possible and what would change in price?"
+  expected: {category: billing, urgency: normal}
+- id: t31
+  input: "Two of our team members share one seat by mistake. How do I split them into separate accounts without losing their task history?"
+  expected: {category: account_access, urgency: normal}
+  tags: [tricky]
+- id: t32
+  input: "The calendar sync with Google works one way only. Events from Google show up but changes I make in Taskwise don't go back."
+  expected: {category: bug, urgency: normal}
+- id: t33
+  input: "I've been getting two receipts per payment for the last 3 months. The amount charged is correct, just the duplicate emails."
+  expected: {category: billing, urgency: normal}
+  tags: [tricky]
+- id: t34
+  input: "File uploads above roughly 50 MB fail with a generic error. Smaller files work fine."
+  expected: {category: bug, urgency: normal}
+
+# ---------------------------------------------------------------- low (14)
+- id: t35
+  input: "How do I change my profile picture?"
+  expected: {category: how_to, urgency: low}
+  tags: [how-to]
+- id: t36
+  input: "Is there a way to see all tasks assigned to me across projects in one place?"
+  expected: {category: how_to, urgency: low}
+  tags: [how-to]
+- id: t37
+  input: "It would be great to have a dark theme for the whole app, my eyes get tired in the evening."
+  expected: {category: feature_request, urgency: low}
+  tags: [feature]
+- id: t38
+  input: "Can you add keyboard shortcuts for switching between projects? Would save me a lot of clicking."
+  expected: {category: feature_request, urgency: low}
+  tags: [feature]
+- id: t39
+  input: "Not urgent at all, but the sidebar icon for Reports looks slightly blurry on my monitor."
+  expected: {category: bug, urgency: low}
+  tags: [cosmetic, tricky]
+- id: t40
+  input: "URGENT!!! How do I rename a project?"
+  expected: {category: how_to, urgency: low}
+  tags: [how-to, tricky]
+- id: t41
+  input: "Whenever you get a chance: can you show me how to set up a recurring task every second Tuesday?"
+  expected: {category: how_to, urgency: low}
+  tags: [how-to]
+- id: t42
+  input: "Feature idea: let us attach a colour to each label so the board is easier to scan."
+  expected: {category: feature_request, urgency: low}
+  tags: [feature]
+- id: t43
+  input: "Is there documentation for the API rate limits? I couldn't find it in the help centre."
+  expected: {category: how_to, urgency: low}
+  tags: [how-to]
+- id: t44
+  input: "A Gantt export to PowerPoint would be really helpful for our weekly reviews. Do you have plans for this?"
+  expected: {category: feature_request, urgency: low}
+  tags: [feature]
+- id: t45
+  input: "Small typo on the pricing page: 'Enterprize'."
+  expected: {category: bug, urgency: low}
+  tags: [cosmetic]
+- id: t46
+  input: "How can I archive a project instead of deleting it?"
+  expected: {category: how_to, urgency: low}
+  tags: [how-to]
+- id: t47
+  input: "No rush, but it would be nice if the mobile app remembered the last project I had open."
+  expected: {category: feature_request, urgency: low}
+  tags: [feature]
+- id: t48
+  input: "Where do I find my invoices from previous years?"
+  expected: {category: billing, urgency: low}
+  tags: [how-to, tricky]

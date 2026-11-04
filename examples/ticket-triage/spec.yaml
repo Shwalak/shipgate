@@ -1,0 +1,109 @@
+# ShipGate spec: should we launch AI-powered support-ticket triage?
+#
+# Feature: read an incoming ticket, return a category (so it reaches the right queue)
+# and an urgency (so emergencies are answered first).
+#
+# How to read this file: the `gates` are the definition of "good enough to launch".
+# They are written down BEFORE the results are seen. Hard gates block a launch;
+# soft gates put it on hold until someone accepts the tradeoff.
+
+feature:
+  name: Support ticket triage
+  description: >-
+    Classify each incoming support ticket by category and urgency so the right queue
+    gets it and emergencies are answered first.
+
+fields: [category, urgency]
+
+# Candidates: a prompt plus a model. `mock_profile` selects the scripted stand-in used
+# by the offline demo (see shipgate/simulated.py); it is ignored with --live.
+#
+# Prices are USD per million tokens and are ILLUSTRATIVE. Replace them with current
+# pricing before reading anything into cost. Model ids are examples; use what you have.
+candidates:
+  - id: baseline
+    label: Baseline prompt, small model
+    prompt_file: prompts/baseline.txt
+    model: claude-haiku-5-5
+    price_per_mtok: {input: 1.00, output: 5.00}
+    mock_profile: baseline
+
+  - id: rubric_v1
+    label: Rubric prompt v1, small model
+    prompt_file: prompts/rubric_v1.txt
+    model: claude-haiku-5-5
+    price_per_mtok: {input: 1.00, output: 5.00}
+    mock_profile: rubric_v1
+
+  - id: rubric_v2
+    label: Rubric prompt v2 (adds safety rule), small model
+    prompt_file: prompts/rubric_v2.txt
+    model: claude-haiku-5-5
+    price_per_mtok: {input: 1.00, output: 5.00}
+    mock_profile: rubric_v2
+
+  - id: strong
+    label: Rubric prompt v2, large model
+    prompt_file: prompts/rubric_v2.txt
+    model: claude-sonnet-5-5
+    price_per_mtok: {input: 5.00, output: 25.00}
+    mock_profile: strong
+
+cases: cases.yaml
+
+# Outcomes that must never happen. Used by the `forbidden_outcomes` metric.
+forbidden:
+  - {field: urgency, expected: urgent, predicted: low}
+
+gates:
+  - id: format
+    description: Output is valid JSON on at least 98% of tickets
+    metric: valid_format_rate
+    op: ">="
+    value: 0.98
+    severity: hard
+
+  - id: never_bury
+    description: No urgent ticket is ever marked low priority
+    metric: forbidden_outcomes
+    op: "<="
+    value: 0
+    severity: hard
+
+  - id: urgent_recall
+    description: At least 85% of urgent tickets are caught as urgent
+    metric: recall
+    field: urgency
+    label: urgent
+    op: ">="
+    value: 0.85
+    severity: hard
+
+  - id: category_accuracy
+    description: Category is right on at least 85% of tickets
+    metric: accuracy
+    field: category
+    op: ">="
+    value: 0.85
+    severity: soft
+
+  - id: overall_accuracy
+    description: Category and urgency are both right on at least 85% of tickets
+    metric: accuracy
+    op: ">="
+    value: 0.85
+    severity: soft
+
+  - id: cost
+    description: Costs at most $1.00 per 1,000 tickets
+    metric: cost_per_1k
+    op: "<="
+    value: 1.00
+    severity: soft
+
+  - id: latency
+    description: 95% of tickets are triaged within 2 seconds
+    metric: p95_latency_s
+    op: "<="
+    value: 2.0
+    severity: soft
