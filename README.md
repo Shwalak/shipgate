@@ -171,7 +171,7 @@ Run the tests with `pip install -e ".[dev]" && pytest`.
 
 ## About this project
 
-Designed and specified by Saksham as an AI and technical product manager portfolio project, and implemented with Claude Code. The PRD, the gate design and the tradeoffs are the product thinking; the code is the proof it runs.
+Designed and specified by Saksham as an AI and technical product manager portfolio project. The PRD, the gate design and the tradeoffs are the product thinking; the code is the proof it runs.
 
 All example data is synthetic. No real customer data is used.
 
